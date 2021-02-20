@@ -36,8 +36,8 @@ async function getRoom(db, roomCode) {
         }
     }).catch(function (error) {
         console.log('Error occurred getting secret. Trying again...')
-        return getClientSecret()
+        return null
     })
 
-    return data.value
+    return data
 }
