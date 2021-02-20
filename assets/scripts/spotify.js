@@ -22,7 +22,9 @@ function login() {
         spotifyLogin();
     }
 
-    getToken(clientSecret)
+    var clientSecret = getClientSecret();
+
+    getToken(clientSecret, code)
 }
 
 async function getToken(clientSecret, code) {
