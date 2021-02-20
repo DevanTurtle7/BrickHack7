@@ -23,8 +23,7 @@ async function login(database) {
     }
 
     var clientSecret = await getClientSecret(database);
-
-    getToken(clientSecret, code)
+    getToken(clientSecret, code);
 }
 
 async function getToken(clientSecret, code) {
