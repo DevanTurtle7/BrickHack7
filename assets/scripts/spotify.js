@@ -36,6 +36,8 @@ async function login(database) {
     console.log(accessToken);
     var uri = "spotify:track:51RN0kzWd7xeR4th5HsEtW";
     //playSong(accessToken, uri);
+    var id = await getUID(accessToken);
+    console.log(id);
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -178,7 +180,7 @@ async function getUID(accessToken) {
             },
             success: function(data) {
                 console.log(data);
-                resolve(data);
+                resolve(data.id);
             }, error: function(data) {
                 console.log('error getting uid');
                 console.log(data);
