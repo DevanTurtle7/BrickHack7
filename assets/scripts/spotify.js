@@ -24,12 +24,16 @@ async function login(database) {
 
     var clientSecret = await getClientSecret(database);
     getToken(clientSecret, code);
+
+    if (localStorage.getItem("refreshToken") == null) {
+        var clientSecret = await getClientSecret(database);
+        var data = await initializeTokens(clientSecret, code);
+
+        localStorage.setItem("refreshToken", data.refresh_token);
+    }
 }
 
-async function getToken(clientSecret, code) {
-
-    console.log(clientSecret);
-
+async function initializeTokens(clientSecret, code) {
     const result = new Promise(function (resolve, reject) { // Create a promise
         // Request the access token
         $.ajax({
