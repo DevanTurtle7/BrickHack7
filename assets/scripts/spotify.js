@@ -38,6 +38,8 @@ async function login(database) {
     //playSong(accessToken, uri);
     var id = await getUID(accessToken);
     console.log(id);
+    var timestamp = await getTimestamp(accessToken);
+    console.log(timestamp);
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -190,4 +192,28 @@ async function getUID(accessToken) {
     })
 
     return result;
+}
+
+function getTimestamp(accessToken) {
+    $.ajax({
+        type: "GET",
+        url: "https://api.spotify.com/v1/me/player",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken,
+        },
+        success: function(data) {
+            console.log(data);
+            resolve(data);
+        }, error: function(data) {
+            console.log('error getting timestamp')
+            console.log(data);
+            reject(data);
+        }
+    })
+}
+
+function setTimestamp() {
+
 }
