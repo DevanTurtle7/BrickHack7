@@ -41,3 +41,15 @@ async function getRoom(db, roomCode) {
 
     return data
 }
+
+function randomCode() {
+    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var code = "";
+
+    for (var i = 0; i < 4; i++) {
+        var random = Math.floor(Math.random() * letters.length);
+        code += letters[random];
+    }
+
+    return code;
+}
