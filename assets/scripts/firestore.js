@@ -66,9 +66,7 @@ async function makeRoom() {
 
     if(roomExists == null){
         const res = await db.collection('rooms').doc(roomCode).set(data);
-    }
-    
-    else{
+    } else{
         makeRoom();
     }
 
