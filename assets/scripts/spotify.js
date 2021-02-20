@@ -60,3 +60,8 @@ async function initializeTokens(clientSecret, code) {
 
     return result // Return the response
 }
+
+function getRefreshToken() {
+    var refreshToken = localStorage.getItem('refreshToken');
+    return refreshToken
+}
