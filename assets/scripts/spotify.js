@@ -15,3 +15,34 @@ function login() {
         spotifyLogin()
     }
 }
+
+async function getToken(clientSecre) {
+
+    const result = new Promise(function (resolve, reject) { // Create a promise
+        // Request the access token
+        $.ajax({
+            type: 'POST',
+            url: 'https://accounts.spotify.com/api/token',
+            data: {
+                'grant_type': 'authorization_code',
+                'code': code,
+                'redirect_uri': redirect_uri,
+            },
+            headers: {
+                // Headers as outline by the Spotify API
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa(client_id + ':' + clientSecret)
+            },
+            success: function (data) {
+                resolve(data) // Resolve the promise
+            },
+            error: function (data) {
+                console.log('error getting token')
+                console.log(data)
+                reject('token error') // Reject the promise
+            }
+        })
+    })
+
+    return result // Return the response
+}
