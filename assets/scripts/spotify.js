@@ -38,14 +38,11 @@ async function login(database) {
     //playSong(accessToken, uri);
     var id = await getUID(accessToken);
     console.log(id);
-<<<<<<< HEAD
     var timestamp = await getTimestamp(accessToken);
     console.log(timestamp);
-=======
     var songID = "51RN0kzWd7xeR4th5HsEtW"
     var song = await getSong(accessToken, songID);
     console.log(song)
->>>>>>> 140aac6ef4825f620955db51e76ac553882461ab
 }
 
 async function initializeTokens(clientSecret, code) {
