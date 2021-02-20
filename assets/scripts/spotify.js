@@ -21,9 +21,11 @@ function login() {
     if (code == null) {
         spotifyLogin();
     }
+
+    getToken(clientSecret)
 }
 
-async function getToken(clientSecre) {
+async function getToken(clientSecret, code) {
 
     const result = new Promise(function (resolve, reject) { // Create a promise
         // Request the access token
@@ -41,6 +43,7 @@ async function getToken(clientSecre) {
                 'Authorization': 'Basic ' + btoa(client_id + ':' + clientSecret)
             },
             success: function (data) {
+                console.log(data);
                 resolve(data) // Resolve the promise
             },
             error: function (data) {
