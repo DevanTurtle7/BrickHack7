@@ -15,19 +15,21 @@ function getCode() {
     }
 }
 
-function login() {
+async function login(database) {
     var code = getCode();
 
     if (code == null) {
         spotifyLogin();
     }
 
-    var clientSecret = getClientSecret();
+    var clientSecret = await getClientSecret(database);
 
     getToken(clientSecret, code)
 }
 
 async function getToken(clientSecret, code) {
+
+    console.log(clientSecret);
 
     const result = new Promise(function (resolve, reject) { // Create a promise
         // Request the access token
