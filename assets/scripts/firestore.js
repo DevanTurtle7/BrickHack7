@@ -72,3 +72,7 @@ async function makeRoom() {
     }
 
 }
+
+async function joinRoom(roomCode) {
+    alert("You've Successfully joined the Room!");
+}
