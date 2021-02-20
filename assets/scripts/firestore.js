@@ -6,7 +6,7 @@ function setupFirebase() {
     return db;
 }
 
-async function getClientSecret() {
+async function getClientSecret(db) {
     /*
     Gets the client secret from firestore
     */
