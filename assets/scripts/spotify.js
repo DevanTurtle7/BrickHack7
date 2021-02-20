@@ -218,6 +218,14 @@ async function getTimestamp(accessToken) {
 function setTimestamp() {
 }
 
+function uriToID(URI){
+    
+}
+
+function idtoURI(ID){
+    return "spotify:track:" + ID;
+}
+
 async function getSong(accessToken, id) {
     const result = new Promise(function (resolve, reject) {
         $.ajax({
