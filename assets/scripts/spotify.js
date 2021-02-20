@@ -104,3 +104,12 @@ async function getAccessToken(clientSecret, refreshToken) {
 
     return result // Return the response
 }
+
+function addToQueue() {
+    const result = new Promise(function(resolve, reject) {
+        $.ajax({
+            type: 'POST',
+            
+        })
+    })
+}
