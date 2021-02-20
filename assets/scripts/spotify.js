@@ -238,7 +238,7 @@ function setTimestamp(accessToken, ms) {
 }
 
 function uriToID(URI){
-    var results = URI.match(":(.*)");
+    var results = URI.match("spotify:track:(.*)");
     return results
 }
 
