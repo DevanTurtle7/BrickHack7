@@ -23,3 +23,21 @@ async function getClientSecret(db) {
 
     return data.value
 }
+
+async function getRoom(db, roomCode) {
+    /*
+    Gets the client secret from firestore
+    */
+    var docRef = db.collection('rooms').doc(roomCode)
+
+    var data = await docRef.get().then(function (doc) {
+        if (doc.exists) {
+            return doc.data()
+        }
+    }).catch(function (error) {
+        console.log('Error occurred getting secret. Trying again...')
+        return getClientSecret()
+    })
+
+    return data.value
+}
