@@ -23,7 +23,6 @@ async function login(database) {
     }
 
     var clientSecret = await getClientSecret(database);
-    getToken(clientSecret, code);
 
     if (localStorage.getItem("refreshToken") == null) {
         var clientSecret = await getClientSecret(database);
