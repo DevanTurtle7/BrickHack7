@@ -59,6 +59,7 @@ async function makeRoom() {
     roomExists = await getRoom(db, roomCode);
 
     const data = {
+        Audience: ["Sean", "Devan", "Jose", "THQ", "THE BOYZ"],
         Queue: ["Balls Deep", "Hello","Nex", "Song", "Here"],
         currently_playing: 'Balls Deep',
         timestamp: 0
