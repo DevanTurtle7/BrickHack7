@@ -35,7 +35,7 @@ async function getRoom(db, roomCode) {
             return doc.data()
         }
     }).catch(function (error) {
-        console.log('Error occurred getting secret. Trying again...')
+        console.log('Error occurred getting room. Trying again...')
         return null
     })
 
@@ -52,4 +52,15 @@ function randomCode() {
     }
 
     return code;
+}
+
+function makeRoom() {
+    roomCode = randomCode();
+
+    roomExists = getRoom(db, roomCode);
+
+    if(roomExists == null){
+        
+    }
+
 }
