@@ -34,7 +34,8 @@ async function login(database) {
     var refreshToken = getRefreshToken();
     var accessToken = await getAccessToken(clientSecret, refreshToken);
     console.log(accessToken);
-    nextSong(accessToken);
+    var uri = "spotify:track:51RN0kzWd7xeR4th5HsEtW";
+    playSong(accessToken, uri);
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -106,13 +107,28 @@ async function getAccessToken(clientSecret, refreshToken) {
     return result // Return the response
 }
 
-function addToQueue() {
-    const result = new Promise(function(resolve, reject) {
+async function addToQueue(accessToken, uri) {
+    // uri = spotify:track:51RN0kzWd7xeR4th5HsEtW
+    const result = new Promise(function (resolve, reject) {
         $.ajax({
             type: 'POST',
-            
+            url: 'https://api.spotify.com/v1/me/player/queue?uri=' + uri,
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken,
+            },
+            success: function (data) {
+                console.log(data);
+                resolve(data);
+            }, error: function (data) {
+                console.log("error");
+                console.log(data);
+            }
         })
     })
+
+    return result;
 }
 
 async function nextSong(accessToken) {
@@ -138,4 +154,12 @@ async function nextSong(accessToken) {
     })
 
     return result // Return the response
+}
+
+async function playSong(accessToken, uri) {
+    try {
+        await addToQueue(accessToken, uri);
+        await nextSong(accessToken);
+    } catch {
+    }
 }
