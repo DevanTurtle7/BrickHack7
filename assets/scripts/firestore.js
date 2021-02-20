@@ -54,9 +54,9 @@ function randomCode() {
     return code;
 }
 
-function makeRoom() {
+async function makeRoom() {
     roomCode = randomCode();
-    roomExists = getRoom(db, roomCode);
+    roomExists = await getRoom(db, roomCode);
 
     const data = {
         currently_playing: 'Balls Deep',
