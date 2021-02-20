@@ -35,8 +35,8 @@ async function login(database) {
     var accessToken = await getAccessToken(clientSecret, refreshToken);
     console.log(accessToken);
     var uri = "spotify:track:51RN0kzWd7xeR4th5HsEtW";
-    var timestamp = await getTimestamp(accessToken);
-    console.log(timestamp);
+    //var timestamp = await setTimestamp(accessToken, 180537);
+    //console.log(timestamp);
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -215,8 +215,26 @@ async function getTimestamp(accessToken) {
     return result;
 }
 
-function setTimestamp() {
+function setTimestamp(accessToken, ms) {
+    const result = new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "PUT",
+            url: "https://api.spotify.com/v1/me/player/seek?position_ms=" + ms,
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken
+            }, success: function(data) {
+                console.log(data);
+                resolve(data);
+            }, error: function(data) {
+                console.log(data);
+                resolve(data);
+            }
+        })
+    })
 
+    return result;
 }
 
 async function getSong(accessToken, id) {
