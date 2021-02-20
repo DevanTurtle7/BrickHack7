@@ -23,7 +23,8 @@ function login() {
     }
 }
 
-async function getToken(clientSecre) {
+async function getToken(clientSecret) {
+    code = getCode();
 
     const result = new Promise(function (resolve, reject) { // Create a promise
         // Request the access token
