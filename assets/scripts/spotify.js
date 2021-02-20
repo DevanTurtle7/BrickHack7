@@ -22,15 +22,15 @@ async function login(database) {
         spotifyLogin();
     }
 
-    var clientSecret = await getClientSecret(database);
+    if (localStorage.getItem("refreshToken") == null) {
+        var clientSecret = await getClientSecret(database);
+        var data = await initializeTokens(clientSecret, code);
 
-    getToken(clientSecret, code)
+        localStorage.setItem("refreshToken", data.refresh_token);
+    }
 }
 
-async function getToken(clientSecret, code) {
-
-    console.log(clientSecret);
-
+async function initializeTokens(clientSecret, code) {
     const result = new Promise(function (resolve, reject) { // Create a promise
         // Request the access token
         $.ajax({
