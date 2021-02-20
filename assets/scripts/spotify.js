@@ -38,6 +38,9 @@ async function login(database) {
     //playSong(accessToken, uri);
     var id = await getUID(accessToken);
     console.log(id);
+    var songID = "51RN0kzWd7xeR4th5HsEtW"
+    var song = await getSong(accessToken, songID);
+    console.log(song)
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -185,6 +188,32 @@ async function getUID(accessToken) {
                 console.log('error getting uid');
                 console.log(data);
                 reject(data);
+            }
+        })
+    })
+
+    return result;
+}
+
+async function getSong(accessToken, id) {
+    const result = new Promise(function(resolve, reject) {
+        $.ajax({
+            type: 'GET',
+            url: 'https://api.spotify.com/v1/tracks/' + id,
+            headers: {
+                "Accept": "application/json",
+                 "Content-Type": "application/json",
+                  "Authorization": "Bearer " + accessToken, 
+            }, success: function(data) {
+                var output = {
+                    name: data.name,
+                    artist: data.artists[0].name
+                }
+                console.log(data)
+                resolve(output)
+            }, error: function(data) {
+                console.log(data)
+                reject(data)
             }
         })
     })
