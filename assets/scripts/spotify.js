@@ -35,7 +35,7 @@ async function login(database) {
     var accessToken = await getAccessToken(clientSecret, refreshToken);
     console.log(accessToken);
     var uri = "spotify:track:51RN0kzWd7xeR4th5HsEtW";
-    playSong(accessToken, uri);
+    //playSong(accessToken, uri);
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -139,7 +139,9 @@ async function nextSong(accessToken) {
             url: 'https://api.spotify.com/v1/me/player/next',
             headers: {
                 // Headers as outline by the Spotify API
-                "Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer " + accessToken,
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken,
             },
             success: function (data) {
                 console.log(data);
@@ -162,4 +164,28 @@ async function playSong(accessToken, uri) {
         await nextSong(accessToken);
     } catch {
     }
+}
+
+async function getUID(accessToken) {
+    const result = new Promise(function(resolve, reject) {
+        $.ajax({
+            type: 'GET',
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken,
+            },
+            success: function(data) {
+                console.log(data);
+                resolve(data);
+            }, error: function(data) {
+                console.log('error getting uid');
+                console.log(data);
+                reject(data);
+            }
+        })
+    })
+
+    return result;
 }
