@@ -30,6 +30,10 @@ async function login(database) {
 
         localStorage.setItem("refreshToken", data.refresh_token);
     }
+
+    var refreshToken = getRefreshToken();
+    var accessToken = await getAccessToken(clientSecret, refreshToken);
+    console.log(accessToken);
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -66,4 +70,37 @@ async function initializeTokens(clientSecret, code) {
 function getRefreshToken() {
     var refreshToken = localStorage.getItem('refreshToken');
     return refreshToken
+}
+
+async function getAccessToken(clientSecret, refreshToken) {
+    /*
+    Get a refresh token
+    Parameters:
+        clientSecret: The Spotify API client secret
+        refreshToken: The refresh token gotten from getToken()
+    */
+    const result = new Promise(function (resolve, reject) { // Create a promise
+        $.ajax({
+            type: 'POST',
+            url: 'https://accounts.spotify.com/api/token',
+            data: {
+                'grant_type': 'refresh_token',
+                'refresh_token': refreshToken,
+            },
+            headers: {
+                // Headers as outline by the Spotify API
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa(client_id + ':' + clientSecret)
+            },
+            success: function (data) {
+                resolve(data.access_token); // Resolve the promise with the token
+            },
+            error: function (data) {
+                console.log('error getting refresh token')
+                reject('token refresh error') // Reject the promise
+            }
+        })
+    })
+
+    return result // Return the response
 }
