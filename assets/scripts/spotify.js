@@ -35,14 +35,8 @@ async function login(database) {
     var accessToken = await getAccessToken(clientSecret, refreshToken);
     console.log(accessToken);
     var uri = "spotify:track:51RN0kzWd7xeR4th5HsEtW";
-    //playSong(accessToken, uri);
-    var id = await getUID(accessToken);
-    console.log(id);
     var timestamp = await getTimestamp(accessToken);
     console.log(timestamp);
-    var songID = "51RN0kzWd7xeR4th5HsEtW"
-    var song = await getSong(accessToken, songID);
-    console.log(song)
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -174,7 +168,7 @@ async function playSong(accessToken, uri) {
 }
 
 async function getUID(accessToken) {
-    const result = new Promise(function(resolve, reject) {
+    const result = new Promise(function (resolve, reject) {
         $.ajax({
             type: 'GET',
             url: 'https://api.spotify.com/v1/me',
@@ -183,10 +177,10 @@ async function getUID(accessToken) {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + accessToken,
             },
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 resolve(data.id);
-            }, error: function(data) {
+            }, error: function (data) {
                 console.log('error getting uid');
                 console.log(data);
                 reject(data);
@@ -197,46 +191,50 @@ async function getUID(accessToken) {
     return result;
 }
 
-function getTimestamp(accessToken) {
-    $.ajax({
-        type: "GET",
-        url: "https://api.spotify.com/v1/me/player",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + accessToken,
-        },
-        success: function(data) {
-            console.log(data);
-            resolve(data);
-        }, error: function(data) {
-            console.log('error getting timestamp')
-            console.log(data);
-            reject(data);
-        }
+async function getTimestamp(accessToken) {
+    const result = new Promise(function (resolve, reject) {
+        $.ajax({
+            type: "GET",
+            url: "https://api.spotify.com/v1/me/player/currently-playing",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken,
+            },
+            success: function (data) {
+                console.log(data);
+                resolve(data.progress_ms);
+            }, error: function (data) {
+                console.log('error getting timestamp')
+                console.log(data);
+                reject(data);
+            }
+        })
     })
+
+    return result;
 }
 
 function setTimestamp() {
 }
 
 async function getSong(accessToken, id) {
-    const result = new Promise(function(resolve, reject) {
+    const result = new Promise(function (resolve, reject) {
         $.ajax({
             type: 'GET',
             url: 'https://api.spotify.com/v1/tracks/' + id,
             headers: {
                 "Accept": "application/json",
-                 "Content-Type": "application/json",
-                  "Authorization": "Bearer " + accessToken, 
-            }, success: function(data) {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken,
+            }, success: function (data) {
                 var output = {
                     name: data.name,
                     artist: data.artists[0].name
                 }
                 console.log(data)
                 resolve(output)
-            }, error: function(data) {
+            }, error: function (data) {
                 console.log(data)
                 reject(data)
             }
