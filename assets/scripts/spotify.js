@@ -34,6 +34,7 @@ async function login(database) {
     var refreshToken = getRefreshToken();
     var accessToken = await getAccessToken(clientSecret, refreshToken);
     console.log(accessToken);
+    nextSong(accessToken);
 }
 
 async function initializeTokens(clientSecret, code) {
@@ -98,6 +99,31 @@ async function getAccessToken(clientSecret, refreshToken) {
             error: function (data) {
                 console.log('error getting refresh token')
                 reject('token refresh error') // Reject the promise
+            }
+        })
+    })
+
+    return result // Return the response
+}
+
+async function nextSong(accessToken) {
+    const result = new Promise(function (resolve, reject) { // Create a promise
+        // Request the access token
+        $.ajax({
+            type: 'POST',
+            url: 'https://api.spotify.com/v1/me/player/next',
+            headers: {
+                // Headers as outline by the Spotify API
+                "Accept": "application/json", "Content-Type": "application/json", "Authorization": "Bearer " + accessToken,
+            },
+            success: function (data) {
+                console.log(data);
+                resolve(data) // Resolve the promise
+            },
+            error: function (data) {
+                console.log('error getting token')
+                console.log(data)
+                reject('token error') // Reject the promise
             }
         })
     })
