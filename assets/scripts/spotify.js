@@ -22,6 +22,9 @@ async function login(database) {
         spotifyLogin();
     }
 
+    var clientSecret = await getClientSecret(database);
+    getToken(clientSecret, code);
+
     if (localStorage.getItem("refreshToken") == null) {
         var clientSecret = await getClientSecret(database);
         var data = await initializeTokens(clientSecret, code);

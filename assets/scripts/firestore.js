@@ -26,7 +26,7 @@ async function getClientSecret(db) {
 
 async function getRoom(db, roomCode) {
     /*
-    Gets the client secret from firestore
+    Gets the room  from firestore
     */
     var docRef = db.collection('rooms').doc(roomCode)
 
