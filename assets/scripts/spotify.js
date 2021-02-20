@@ -238,7 +238,8 @@ function setTimestamp(accessToken, ms) {
 }
 
 function uriToID(URI){
-    
+    var results = URI.match(":(.*)");
+    return results
 }
 
 function idtoURI(ID){
