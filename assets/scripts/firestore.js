@@ -43,8 +43,8 @@ async function getRoom(db, roomCode) {
 }
 
 function randomCode() {
-    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var code = "";
+    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var code = '';
 
     for (var i = 0; i < 4; i++) {
         var random = Math.floor(Math.random() * letters.length);
@@ -56,11 +56,15 @@ function randomCode() {
 
 function makeRoom() {
     roomCode = randomCode();
-
     roomExists = getRoom(db, roomCode);
 
+    const data = {
+        currently_playing: 'Balls Deep',
+        timestamp: 0
+    }
+
     if(roomExists == null){
-        
+        const res = await db.collection('rooms').doc(roomCode).set(data);
     }
 
 }
