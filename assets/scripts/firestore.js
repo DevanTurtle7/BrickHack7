@@ -134,7 +134,7 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
     }
 }
 
-function listener(roomCode){
+async function listener(roomCode){
     var data = await docRef.get().then(function (doc) {
         if (doc.exists) {
             return doc.data()
