@@ -83,7 +83,7 @@ async function joinRoom(roomCode, database) {
     await db.collection('rooms').doc(roomCode).update({
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
     });
-
+333
     var docRef = await database.collection('rooms').doc(roomCode);
     var data = await docRef.get().then(function (doc) {
         if (doc.exists) {
