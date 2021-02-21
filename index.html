@@ -19,19 +19,22 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
     <body>
-        <form>
-            <label for="groupID">Group ID:</label><br>
-            <input type="text" id="groupID" name="fname" maxlength="4" style="text-transform:uppercase"><br>
-            <label for="groupID">Song Queue:</label><br>
-            <input type="text" id="songQueue" name = "sQueue"><br>
-            <input type="button" id="makeGroup" value="Make Room">
-            <input type="button" id="joinGroup" value="Join Room">
-            <input type="button" id="voteYes" value="Yes">
-            <input type="button" id="voteNo" value="No">
-            <input type="button" id="suggest" value="Suggest">
-          </form>
-
-          <p id = "Name">Name</p>
-          <p id = "Artist">Artist</p>
+        <div id="baseForm">
+            <form>
+                <label for="groupID">Group ID:</label><br>
+                <input type="text" id="groupID" name="fname" maxlength="4" style="text-transform:uppercase"><br>
+                <label for="groupID">Song Queue:</label><br>
+                <input type="text" id="songQueue" name = "sQueue"><br>
+                <input type="button" id="makeGroup" value="Make Room">
+                <input type="button" id="joinGroup" value="Join Room"><br>
+                <p></p>
+                <input type="button" id="voteYes" value="Yes">
+                <input type="button" id="voteNo" value="No">
+                <input type="button" id="suggest" value="Suggest">
+            </form>
+            <p id = "Name">Name</p>
+            <p id = "Artist">Artist</p>
+        </div>
+          
     </body>
 </html>
