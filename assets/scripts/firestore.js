@@ -109,7 +109,6 @@ async function joinRoom(roomCode, database) {
 
     $("#addSong").click(async function () {
         addSongDB(database, roomCode, accessToken);
-        $("#songQueue").css("value", "");
     });
 
     var data = await getRoomData(database, roomCode);
