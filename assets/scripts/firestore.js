@@ -62,7 +62,7 @@ async function makeRoom() {
         Audience: [],
         Queue: [],
         currently_playing: '',
-        songIndex = 0,
+        songIndex: 0,
         timestamp: 0
     }
 
