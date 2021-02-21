@@ -106,7 +106,7 @@ async function joinRoom(roomCode, database) {
 
     }
 
-    createVote(database, roomCode);
+    //createVote(database, roomCode);
     listener(database, roomCode);
 }
 
@@ -141,7 +141,7 @@ async function listener(database, roomCode){
     database.collection("rooms").doc(roomCode).onSnapshot((doc) => {
         console.log("Current data: ", doc.data());
 
-        if (doct.data().vote.length == 0) {
+        if (doc.data().vote.length == 0) {
             localStorage.setItem("handlingVote", false);
         } else if (localStorage.getItem("handlingVote") == false && localStorage.getItem("creatingVote") == false){
             localStorage.setItem("handlingVote", true);
