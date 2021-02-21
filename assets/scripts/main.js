@@ -14,7 +14,6 @@ $(document).ready(function () {
         $("#voteNo").show();
         $("#addSong").show();
         $("#skip").show();
-
         roomCode = await joinRoom($("#groupID").val(), database);
     });
 
@@ -26,7 +25,7 @@ $(document).ready(function () {
         $("#addSong").show();
         $("#skip").show();
         roomCode = await makeRoom();
-
+        
     });
 
     $("#skip").click(async function () {
