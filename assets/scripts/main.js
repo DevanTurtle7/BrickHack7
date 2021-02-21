@@ -8,14 +8,13 @@ $(document).ready(function () {
     var roomCode;
 
     $("#joinGroup").click(async function () {
-        $("#label1").hide();
-        $("#groupID").hide();
-        $("#makeGroup").hide();
-        $("#joinGroup").hide();
+        $("#startPage").hide();
         $("#voteYes").show();
         $("#voteNo").show();
         $("#addSong").show();
         $("#skip").show();
+        $("#label2").show();
+        $("#songQueue").show();
         roomCode = await joinRoom($("#groupID").val(), database);
     });
 
