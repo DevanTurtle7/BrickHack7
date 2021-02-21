@@ -141,6 +141,9 @@ async function listener(database, roomCode){
     database.collection("rooms").doc(roomCode).onSnapshot((doc) => {
         console.log("Current data: ", doc.data());
 
+        console.log(localStorage.getItem('handlingVote'));
+        console.log(localStorage.getItem('creatingVote'));
+
         if (doc.data().vote.length == 0) {
             localStorage.setItem("handlingVote", false);
         } else if (localStorage.getItem("handlingVote") == false && localStorage.getItem("creatingVote") == false){
@@ -187,6 +190,7 @@ async function createVote(database, roomCode) {
             var voteResult = data.vote[0].yes / totalVotes >= 0.5;
 
             console.log(voteResult);
+            localStorage.setItem('creatingVote', false);
             resolve(voteResult)
         })
 
