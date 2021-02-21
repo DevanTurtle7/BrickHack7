@@ -32,6 +32,7 @@ $(document).ready(function () {
     });
 
     $("#skip").click(function() {
+        console.log(roomCode);
         createVote(database, roomCode)
     })
 });
