@@ -178,6 +178,7 @@ async function listener(database, roomCode, clientSecret) {
 
             $("#voteYes").click(function () {
                 if (!voted) {
+                    $("#votePrompt").hide();
                     docRef.update({
                         "vote.yes": firebase.firestore.FieldValue.increment(1)
                     });
@@ -187,12 +188,16 @@ async function listener(database, roomCode, clientSecret) {
 
             $("#voteNo").click(function () {
                 if (!voted) {
+                    $("#votePrompt").hide();
                     docRef.update({
                         "vote.no": firebase.firestore.FieldValue.increment(1)
                     });
                 }
                 voted = true;
+                
             });
+
+            
 
             var vote = {};
             var data = await getRoomData(database, roomCode);
