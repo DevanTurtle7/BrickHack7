@@ -153,7 +153,7 @@ async function listener(database, roomCode, clientSecret) {
     var roomData = await getRoomData(database, roomCode);
     var numSongs = roomData.Queue.length;
 
-    database.collection("rooms").doc(roomCode).onSnapshot(async function(doc) {
+    database.collection("rooms").doc(roomCode).onSnapshot(async function (doc) {
         var refreshToken = getRefreshToken();
         var accessToken = await getAccessToken(clientSecret, refreshToken);
 
@@ -192,21 +192,29 @@ async function listener(database, roomCode, clientSecret) {
                 voted = true;
             });
 
-            var data = getRoomData(database, roomCode);
-            var lastVote = {};
+            var vote = {};
+            var data = await getRoomData(database, roomCode);
 
             while (data.vote.time != null) {
                 await sleep(1000);
-                var vote = data.vote;
+                data = await getRoomData(database, roomCode);
+                if (data.vote.time != null) {
+                    vote = data.vote;
+                }
             }
 
             console.log("lastVote:");
-            console.log(lastVote);
+            console.log(vote);
+
+            var totalVotes = vote.yes + vote.no;
+            if (vote.yes / totalVotes >= .5) {
+                nextSong(accessToken);
+            }
         }
 
         if (currentNumSongs > numSongs && currentNumSongs - 1 != doc.data().songIndex) {
             console.log('adding to queue');
-            var uri = doc.data().Queue[currentNumSongs-1];
+            var uri = doc.data().Queue[currentNumSongs - 1];
             addToQueue(accessToken, uri)
         }
 

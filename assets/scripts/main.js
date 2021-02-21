@@ -40,6 +40,12 @@ $(document).ready(function () {
                 songIndex: currentSongIndex + 1,
                 timestamp: currentTime
             })
+
+            var clientSecret = getClientSecret();
+            var refreshToken = getRefreshToken();
+            var accessToken = getAccessToken(clientSecret, refreshToken);
+
+            nextSong(accessToken);
         }
     })
 });
