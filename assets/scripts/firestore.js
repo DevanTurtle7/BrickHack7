@@ -76,6 +76,12 @@ async function makeRoom() {
 async function joinRoom(roomCode) {
     alert("You've Successfully joined the Room!");
     userId = getUID();
-    const res = await db.collection('rooms').doc(roomCode).
+
+    
+
+    database.collection("rooms").doc("XNUG")
+    .onSnapshot((doc) => {
+        console.log("Current data: ", doc.data());
+    });
 
 }
