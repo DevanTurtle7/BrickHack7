@@ -19,7 +19,6 @@ $(document).ready(function () {
     });
 
     $("#makeGroup").click(async function() {
-        makeRoom();
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
