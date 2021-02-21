@@ -37,7 +37,7 @@ $(document).ready(function () {
             var currentTime = new Date();
 
             docRef.update({
-                songIndex: currentSongIndex + 1,
+                songIndex: firebase.firestore.FieldValue.increment(1),
                 timestamp: currentTime
             })
 
