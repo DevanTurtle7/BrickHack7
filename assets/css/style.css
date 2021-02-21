@@ -12,6 +12,13 @@
     transform: translate(-50%, -50%);
 }
 
+.inputField{
+    border-radius: 18px;
+    background: rgb(255, 255, 255);
+    padding: 12px; 
+    width: 200px;
+    height: 10px;
+}
 #songQueue{
     display: none;
 }
