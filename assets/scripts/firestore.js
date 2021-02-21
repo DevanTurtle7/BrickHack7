@@ -172,6 +172,8 @@ async function listener(database, roomCode, clientSecret) {
             console.log("you have a vote pending");
             localStorage.setItem("handlingVote", true);
 
+            $("#votePrompt").show();
+
             var voted = false;
 
             $("#voteYes").click(function () {
@@ -210,6 +212,8 @@ async function listener(database, roomCode, clientSecret) {
             if (vote.yes / totalVotes >= .5) {
                 nextSong(accessToken);
             }
+
+            $("#votePrompt").hide();
         }
 
         if (currentNumSongs > numSongs && currentNumSongs - 1 != doc.data().songIndex) {
