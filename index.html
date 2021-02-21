@@ -20,25 +20,38 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
 </head>
-    <body style="background-color: rgb(44, 43, 43);">
 
-        <div id="baseForm">
+<body>
 
-            <h1 id="websiteIntro"> Tempo </h1>
+    <div id="baseForm">
 
+        <h1 id="websiteIntro"> Tempo </h1>
+        <div id="startPage">
             <form>
                 <input placeholder="Enter Group ID to join" class="inputField" type="text" id="groupID" name="fname" maxlength="4" style="text-transform:uppercase"><br>
-                <input placeholder="Enter Song to Queue" class="inputField" type="text"  id="songQueue" name = "sQueue"><br>
                 <input type="button" class="Button" id="makeGroup" value="Make Room">
                 <input type="button" class="Button" id="joinGroup" value="Join Room"><br>
-                <p></p>
-                <input type="button" class="Button" id="voteYes" value="Yes">
-                <input type="button" class="Button" id="voteNo" value="No">
+            </form>
+        </div>
+        <div id="room">
+            <div id="addSongPrompt">
+            <form>
+                <input placeholder="Enter Song to Queue" class="inputField" type="text"  id="songQueue" name = "sQueue"><br>
                 <input type="button" class="Button" id="addSong" value="Add Song">
                 <input type="button" class="Button" id="skip" value="Skip">
             </form>
-            <p id = "Name">Name</p>
-            <p id = "Artist">Artist</p>
+            </div>
+            <div id="votePrompt">
+                <p>Skip the Current Song?</p>
+                <form>
+                    <input type="button" class="Button" id="voteYes" value="Yes">
+                    <input type="button" class="Button" id="voteNo" value="No">
+                </form>
+            </div>
         </div>
-    </body>
+        <p id="Name">Name</p>
+        <p id="Artist">Artist</p>
+    </div>
+</body>
+
 </html>
