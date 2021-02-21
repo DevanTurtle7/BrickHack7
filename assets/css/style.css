@@ -11,3 +11,15 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+#voteYes {
+    display: none;
+}
+
+#voteNo{
+    display: none;
+}
+
+#suggest{
+    display: none;
+}
