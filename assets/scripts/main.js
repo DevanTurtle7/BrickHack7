@@ -13,4 +13,8 @@ $(document).ready(function () {
     $("#makeGroup").click(function() {
         makeRoom();
     });
+
+    $("#suggest").click(function() {
+        alert($("#songQueue").val());
+    });
 });
