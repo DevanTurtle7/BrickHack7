@@ -152,5 +152,7 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
 
 async function createVote(){
     localStorage.setItem("creatingVote", true);
+    if(data.vote.length == 0) {
 
+    }
 }
