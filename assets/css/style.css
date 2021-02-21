@@ -23,6 +23,9 @@ body {
 
 #roomInfo{
     display: none;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    color:white;
 }
 
 #songQueue{
@@ -51,6 +54,7 @@ body {
 
 #websiteIntro {
     font-family: 'Archivo Black', sans-serif;
+    margin-bottom: 0;
     font-size: 70px;
 }
 
@@ -82,7 +86,7 @@ body {
 }
 
 #addSongPrompt {
-    padding-top: 50px;
+    padding-top: 20px;
     display: flex;
     flex-flow: row;
     justify-content: center;
@@ -94,4 +98,8 @@ body {
     padding: 20px;
     display: none;
     border-radius: 8px;
+}
+
+#startPage{
+    padding-top: 20px;
 }
