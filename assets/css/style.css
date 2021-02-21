@@ -1,7 +1,8 @@
 #body{
-    background-image: linear-gradient(to right, red , yellow) !important;
+    
 }
 #baseForm {
+    color:white;
     text-align: center;
     margin: 0;
     position: absolute;
@@ -9,6 +10,14 @@
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+
+#songQueue{
+    display: none;
+}
+
+#label2 {
+    display: none;
 }
 
 #voteYes {
@@ -28,7 +37,8 @@
 }
 
 #websiteIntro {
-    font-family: 'Arvo';
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 70px;
 }
 
 #Name {
@@ -40,7 +50,7 @@
 }
 
 .Button {
-    background-color: #ddd;
+    background-color: rgb(101,211,110);
     border: none;
     color: black;
     padding: 10px 20px;

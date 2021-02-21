@@ -28,6 +28,8 @@ $(document).ready(function () {
         $("#voteNo").show();
         $("#addSong").show();
         $("#skip").show();
+        $("#label2").show();
+        $("#songQueue").show();
         roomCode = await makeRoom();
         
     });
