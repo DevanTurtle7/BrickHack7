@@ -79,6 +79,8 @@ async function joinRoom(roomCode, database) {
     var refreshToken = getRefreshToken();
     var accessToken = await getAccessToken(clientSecret, refreshToken);
     userId = await getUID(accessToken);
+    localStorage.setItem("handlingVote", false);
+    localStorage.setItem("creatingVote", false);
 
     await db.collection('rooms').doc(roomCode).update({
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
@@ -93,9 +95,6 @@ async function joinRoom(roomCode, database) {
         var diff = Math.round(Math.abs(currentTimeInSeconds - startTime.seconds));
         diff *= 1000;
 
-        localStorage.setItem("handlingVote", false);
-        localStorage.setItem("creatingVote", false);
-
         await playSong(accessToken, data.Queue[data.songIndex], diff);
 
         for (var i = data.songIndex + 1; i < data.Queue.length; i++) {
@@ -103,10 +102,9 @@ async function joinRoom(roomCode, database) {
             console.log(data.Queue[i]);
             addToQueue(accessToken, data.Queue[i])
         }
-
     }
 
-    createVote(database, roomCode);
+    //createVote(database, roomCode);
     listener(database, roomCode);
 }
 
@@ -135,9 +133,7 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
     }
 }
 
-async function listener(database, roomCode){
-    var currentTime = new Date();
-
+async function listener(database, roomCode) {
     database.collection("rooms").doc(roomCode).onSnapshot((doc) => {
         console.log("Current data: ", doc.data());
 
