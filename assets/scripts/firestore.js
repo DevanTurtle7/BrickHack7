@@ -101,9 +101,10 @@ async function joinRoom(roomCode, database) {
     console.log(startTime)
 
     var currentTime = new Date();
-    var currentTimeInSeconds = currentTime.getSeconds();
+    var currentTimeInSeconds = currentTime.getTime() / 1000;
+    console.log(currentTime);
 
-    var diff = Math.abs(currentTimeInSeconds - startTime);
+    var diff = Math.abs(currentTimeInSeconds - startTime.seconds);
     console.log(diff);
     playSong(accessToken, data.currently_playing, diff);
 }
