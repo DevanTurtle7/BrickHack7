@@ -13,4 +13,12 @@ $(document).ready(function () {
     $("#makeGroup").click(function() {
         makeRoom();
     });
+
+    $("#voteYes").click(function() {
+        
+    });
+
+    $("#voteNo").click(function() {
+        
+    });
 });
