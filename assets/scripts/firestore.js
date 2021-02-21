@@ -59,8 +59,8 @@ async function makeRoom() {
     roomExists = await getRoom(db, roomCode);
 
     const data = {
-        Audience: ["", "", "", "", ""],
-        Queue: ["", "","", "", ""],
+        Audience: [],
+        Queue: [],
         currently_playing: '',
         timestamp: 0
     }
@@ -76,5 +76,6 @@ async function makeRoom() {
 async function joinRoom(roomCode) {
     alert("You've Successfully joined the Room!");
     userId = getUID();
+    const res = await db.collection('rooms').doc(roomCode).
 
 }
