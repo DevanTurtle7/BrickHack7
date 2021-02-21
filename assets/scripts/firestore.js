@@ -24,22 +24,19 @@ async function getClientSecret(db) {
     return data.value
 }
 
-async function getRoom(db, roomCode) {
-    /*
-    Gets the room  from firestore
-    */
-    var docRef = db.collection('rooms').doc(roomCode)
-
-    var data = await docRef.get().then(function (doc) {
+async function getRoomData(database, roomCode) {
+    var docRef = await database.collection('rooms').doc(roomCode);
+    data = await docRef.get().then(function (doc) {
         if (doc.exists) {
             return doc.data()
         }
     }).catch(function (error) {
-        console.log('Error occurred getting room. Trying again...')
-        return null
+        console.log("Error getting room data")
+        console.log(error)
+        return null;
     })
 
-    return data
+    return data;
 }
 
 function randomCode() {
@@ -56,7 +53,7 @@ function randomCode() {
 
 async function makeRoom() {
     roomCode = randomCode();
-    roomExists = await getRoom(db, roomCode);
+    roomExists = await getRoomData(db, roomCode);
 
     const data = {
         Audience: [],
@@ -87,15 +84,7 @@ async function joinRoom(roomCode, database) {
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
     });
 
-    var docRef = await database.collection('rooms').doc(roomCode);
-    var data = await docRef.get().then(function (doc) {
-        if (doc.exists) {
-            return doc.data()
-        }
-    }).catch(function (error) {
-            console.log("Error calling the database");
-            console.log(error);
-    })
+    var data = await getRoomData(database, roomCode);
 
     if (data.Queue.length > 0) {
         var startTime = data.songStart;
@@ -116,28 +105,20 @@ async function joinRoom(roomCode, database) {
         }
 
     }
-    
+
     createVote(database, roomCode);
 }
 
 async function heartbeat(accessToken, songIndex, roomCode, database) {
     var lastTimestamp = await getTimestamp(accessToken);
     var lastSongIndex = songIndex;
-    var docRef = await database.collection('rooms').doc(roomCode);
 
     console.log("starting heartbeat");
 
     while (true) {
         await sleep(1000);
+        var data = await getRoomData(database, roomCode);
         var currentTimestamp = await getTimestamp(accessToken);
-        var data = await docRef.get().then(function (doc) {
-            if (doc.exists) {
-                return doc.data()
-            }
-        }).catch(function (error) {
-            console.log("Error calling the database");
-            console.log(error);
-        })
         var currentSongIndex = data.songIndex;
 
         if (currentTimestamp < lastTimestamp) {
@@ -154,23 +135,47 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
 }
 
 async function createVote(database, roomCode) {
-        var data = await docRef.get().then(function (doc) {
-            if (doc.exists) {
-                return doc.data()
-            }
-        }).catch(function (error) {
-            console.log('Error Calling the database ' + error)
-        })
-    var currentTime = new Date();
-    var docRef = await  database.collection('rooms').doc(roomCode);
+    var timestamp = new Date();
+    var data = await getRoomData(database, roomCode);
+    var docRef = await database.collection('rooms').doc(roomCode);
+
     if (data.vote.length == 0) {
         localStorage.setItem("creatingVote", true);
+
         await docRef.update({
-            vote: {
-                time: currentTime,
+            vote: [{
+                time: timestamp,
                 yes: 0,
                 no: 0,
-            }
+            }]
         })
+
+        const result = new Promise(async function (resolve, reject) {
+            var data = await getRoomData(database, roomCode);
+            var diff = 0;
+            var votes = 0;
+            var members = data.Audience.length;
+
+            while (diff < 15 && votes < members) {
+                await sleep(1000);
+
+                var data = await getRoomData(database, roomCode);
+                var currentTime = new Date().getTime();
+                var diff = Math.round((currentTime - timestamp.getTime()) / 1000);
+                votes = data.vote[0].yes + data.vote[0].no;
+                members = data.Audience.length;
+            }
+
+            var data = await getRoomData(database, roomCode);
+            var totalVotes = data.vote[0].yes + data.vote[0].no;
+            var voteResult = data.vote[0].yes / totalVotes >= 0.5;
+
+            console.log(voteResult);
+            resolve(voteResult)
+        })
+
+        return result;
     }
+
+    return null
 }
