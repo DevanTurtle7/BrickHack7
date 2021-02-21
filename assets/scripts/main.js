@@ -7,19 +7,18 @@ $(document).ready(function () {
     login(database);
     var roomCode;
     
-    $("#joinGroup").click(function() {
-        roomCode = joinRoom($("#groupID").val(), database);
-
-        joinRoom($("#groupID").val(), database);
+    $("#joinGroup").click(async function() {
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
         $("#voteNo").show();
         $("#addSong").show();
         $("#skip").show();
+
+        roomCode = await joinRoom($("#groupID").val(), database);
     });
 
-    $("#makeGroup").click(function() {
+    $("#makeGroup").click(async function() {
         makeRoom();
         $("#makeGroup").hide();
         $("#joinGroup").hide();
@@ -27,7 +26,7 @@ $(document).ready(function () {
         $("#voteNo").show();
         $("#addSong").show();
         $("#skip").show();
-        roomCode = makeRoom();
+        roomCode = await makeRoom();
 
     });
 
