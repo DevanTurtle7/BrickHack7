@@ -1,13 +1,13 @@
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
 
 $(document).ready(function () {
     var database = setupFirebase();
     login(database);
     var roomCode;
-    
-    $("#joinGroup").click(async function() {
+
+    $("#joinGroup").click(async function () {
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
@@ -18,7 +18,7 @@ $(document).ready(function () {
         roomCode = await joinRoom($("#groupID").val(), database);
     });
 
-    $("#makeGroup").click(async function() {
+    $("#makeGroup").click(async function () {
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
@@ -29,8 +29,18 @@ $(document).ready(function () {
 
     });
 
-    $("#skip").click(function() {
+    $("#skip").click(async function () {
         console.log(roomCode);
-        var result = await createVote(database, roomCode)
+        var votePassed = await createVote(database, roomCode)
+
+        if (votePassed) {
+            var docRef = await database.collection('rooms').doc(roomCode);
+            var currentTime = new Date();
+
+            docRef.update({
+                songIndex: currentSongIndex + 1,
+                timestamp: currentTime
+            })
+        }
     })
 });

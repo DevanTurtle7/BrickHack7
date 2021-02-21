@@ -192,6 +192,16 @@ async function listener(database, roomCode, clientSecret) {
                 voted = true;
             });
 
+            var data = getRoomData(database, roomCode);
+            var lastVote = {};
+
+            while (data.vote.time != null) {
+                await sleep(1000);
+                var vote = data.vote;
+            }
+
+            console.log("lastVote:");
+            console.log(lastVote);
         }
 
         if (currentNumSongs > numSongs && currentNumSongs - 1 != doc.data().songIndex) {
