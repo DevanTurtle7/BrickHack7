@@ -141,14 +141,14 @@ async function listener(database, roomCode){
     database.collection("rooms").doc(roomCode).onSnapshot((doc) => {
         console.log("Current data: ", doc.data());
 
-        console.log(localStorage.getItem('handlingVote'));
-        console.log(localStorage.getItem('creatingVote'));
+        var creatingVote = JSON.parse(localStorage.getItem('creatingVote'));
+        var handlingVote = JSON.parse(localStorage.getItem('handlingVote'));
 
         if (doc.data().vote.length == 0) {
             localStorage.setItem("handlingVote", false);
-        } else if (localStorage.getItem("handlingVote") == false && localStorage.getItem("creatingVote") == false){
-            localStorage.setItem("handlingVote", true);
+        } else if (!handlingVote && !creatingVote) {
             console.log("you have a vote pending");
+            localStorage.setItem("handlingVote", true);
         }
     });
 }
