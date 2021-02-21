@@ -73,14 +73,15 @@ async function makeRoom() {
 
 }
 
-async function joinRoom(roomCode) {
+async function joinRoom(roomCode, database) {
     alert("You've Successfully joined the Room!");
-    userId = getUID();
+    var clientSecret = await getClientSecret(database);
+    var refreshToken = getRefreshToken();
+    var accessToken = await getAccessToken(clientSecret, refreshToken);
+    userId = await getUID(accessToken);
 
-    
-    database.collection("rooms").doc("XNUG")
-    .onSnapshot((doc) => {
-        console.log("Current data: ", doc.data());
+    const res = await db.collection('rooms').doc(roomCode).update({
+        Audience: firebase.firestore.FieldValue.arrayUnion(userId)
+
     });
-
 }
