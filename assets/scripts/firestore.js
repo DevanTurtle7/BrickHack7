@@ -66,9 +66,9 @@ async function makeRoom() {
         timestamp: 0
     }
 
-    if(roomExists == null){
+    if (roomExists == null) {
         const res = await db.collection('rooms').doc(roomCode).set(data);
-    } else{
+    } else {
         makeRoom();
     }
 
@@ -95,19 +95,21 @@ async function joinRoom(roomCode, database) {
         return getClientSecret()
     })
 
-    var startTime = data.songStart;
-    var currentTime = new Date();
-    var currentTimeInSeconds = currentTime.getTime() / 1000;
-    var diff = Math.round(Math.abs(currentTimeInSeconds - startTime.seconds));
-    diff *= 1000;
+    if (data.Queue.length > 0) {
+        var startTime = data.songStart;
+        var currentTime = new Date();
+        var currentTimeInSeconds = currentTime.getTime() / 1000;
+        var diff = Math.round(Math.abs(currentTimeInSeconds - startTime.seconds));
+        diff *= 1000;
 
-    localStorage.setItem("handlingVote", false);
-    localStorage.setItem("creatingVote", false);
+        localStorage.setItem("handlingVote", false);
+        localStorage.setItem("creatingVote", false);
 
-    await playSong(accessToken, data.Queue[data.songIndex], diff);
-    for(var i = data.songIndex + 1; i < data.Queue.length;i++){
-        console.log("i is " + i);
-        console.log(data.Queue[i]);
-        addToQueue(accessToken, data.Queue[i])
+        await playSong(accessToken, data.Queue[data.songIndex], diff);
+        for (var i = data.songIndex + 1; i < data.Queue.length; i++) {
+            console.log("i is " + i);
+            console.log(data.Queue[i]);
+            addToQueue(accessToken, data.Queue[i])
+        }
     }
 }
