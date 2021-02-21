@@ -102,6 +102,8 @@ async function joinRoom(roomCode, database) {
             console.log(data.Queue[i]);
             addToQueue(accessToken, data.Queue[i])
         }
+
+        heartbeat(accessToken, data.songIndex, roomCode, database);
     }
 
     createVote(database, roomCode);
@@ -111,6 +113,7 @@ async function joinRoom(roomCode, database) {
 async function heartbeat(accessToken, songIndex, roomCode, database) {
     var lastTimestamp = await getTimestamp(accessToken);
     var lastSongIndex = songIndex;
+    var docRef = await database.collection('rooms').doc(roomCode);
 
     console.log("starting heartbeat");
 
@@ -134,6 +137,8 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
 }
 
 async function listener(database, roomCode) {
+    var docRef = await database.collection('rooms').doc(roomCode);
+
     database.collection("rooms").doc(roomCode).onSnapshot((doc) => {
         console.log("Current data: ", doc.data());
 
@@ -145,6 +150,27 @@ async function listener(database, roomCode) {
         } else if (!handlingVote && !creatingVote) {
             console.log("you have a vote pending");
             localStorage.setItem("handlingVote", true);
+
+            var voted = false;
+
+            $("#voteYes").click(function () {
+                if (!voted) {
+                    docRef.update({
+                        "vote.0.yes": firebase.firestore.FieldValue.increment(1)
+                    });
+                }
+                voted = true;
+            });
+
+            $("#voteNo").click(function () {
+                if (!voted) {
+                    docRef.update({
+                        "vote.0.no": firebase.firestore.FieldValue.increment(1)
+                    });
+                }
+                voted = true;
+            });
+
         }
     });
 }
@@ -160,7 +186,7 @@ async function createVote(database, roomCode) {
         await docRef.update({
             vote: [{
                 time: timestamp,
-                yes: 0,
+                yes: 1,
                 no: 0,
             }]
         })
