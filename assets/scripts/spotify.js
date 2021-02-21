@@ -206,7 +206,7 @@ async function getTimestamp(accessToken) {
                 'Authorization': 'Bearer ' + accessToken,
             },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 resolve(data.progress_ms);
             }, error: function (data) {
                 console.log('error getting timestamp')
