@@ -20,14 +20,14 @@ $(document).ready(function () {
     });
 
     $("#makeGroup").click(function() {
+        roomCode = await makeRoom();
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
         $("#voteNo").show();
         $("#addSong").show();
         $("#skip").show();
-        roomCode = await makeRoom();
-
+        
     });
 
     $("#skip").click(function() {
