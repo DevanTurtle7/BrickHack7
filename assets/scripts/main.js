@@ -5,12 +5,17 @@ function sleep(ms) {
 $(document).ready(function () {
     var database = setupFirebase();
     login(database);
+    var roomCode;
     
     $("#joinGroup").click(function() {
-        joinRoom($("#groupID").val(), database);
+        roomCode = joinRoom($("#groupID").val(), database);
     });
 
     $("#makeGroup").click(function() {
-        makeRoom();
+        roomCode = makeRoom();
     });
+
+    $("#skip").click(function() {
+        createVote(database, roomCode)
+    })
 });
