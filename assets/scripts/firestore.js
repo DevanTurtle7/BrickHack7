@@ -106,7 +106,7 @@ async function joinRoom(roomCode, database) {
         heartbeat(accessToken, data.songIndex, roomCode, database);
     }
 
-    //createVote(database, roomCode);
+    createVote(database, roomCode);
     listener(database, roomCode);
 }
 
@@ -213,6 +213,9 @@ async function createVote(database, roomCode) {
 
             console.log(voteResult);
             localStorage.setItem('creatingVote', false);
+            await docRef.update({
+                vote: {}
+            })
             resolve(voteResult)
         })
 
