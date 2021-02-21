@@ -88,5 +88,6 @@ body {
 #votePrompt {
     background-color: rgb(35, 35, 35);
     padding: 20px;
+    display: none;
     border-radius: 8px;
 }

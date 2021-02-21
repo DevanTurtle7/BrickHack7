@@ -20,10 +20,7 @@ $(document).ready(function () {
     });
 
     $("#makeGroup").click(async function () {
-        $("#label1").hide();
-        $("#groupID").hide();
-        $("#makeGroup").hide();
-        $("#joinGroup").hide();
+        $("#startPage").hide();
         $("#voteYes").show();
         $("#voteNo").show();
         $("#addSong").show();
