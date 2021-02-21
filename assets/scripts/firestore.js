@@ -59,20 +59,29 @@ async function makeRoom() {
     roomExists = await getRoom(db, roomCode);
 
     const data = {
-        currently_playing: 'Balls Deep',
+        Audience: [],
+        Queue: [],
+        currently_playing: '',
         timestamp: 0
     }
 
     if(roomExists == null){
         const res = await db.collection('rooms').doc(roomCode).set(data);
-    }
-    
-    else{
+    } else{
         makeRoom();
     }
 
 }
 
-async function joinRoom(roomCode) {
+async function joinRoom(roomCode, database) {
     alert("You've Successfully joined the Room!");
+    var clientSecret = await getClientSecret(database);
+    var refreshToken = getRefreshToken();
+    var accessToken = await getAccessToken(clientSecret, refreshToken);
+    userId = await getUID(accessToken);
+
+    const res = await db.collection('rooms').doc(roomCode).update({
+        Audience: firebase.firestore.FieldValue.arrayUnion(userId)
+    });
+
 }
