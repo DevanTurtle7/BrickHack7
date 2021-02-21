@@ -1,3 +1,7 @@
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 $(document).ready(function () {
     var database = setupFirebase();
     login(database);

@@ -112,5 +112,39 @@ async function joinRoom(roomCode, database) {
             console.log(data.Queue[i]);
             addToQueue(accessToken, data.Queue[i])
         }
+        heartbeat(accessToken, data.songIndex, roomCode, database);
+    }
+}
+
+async function heartbeat(accessToken, songIndex, roomCode, database) {
+    var lastTimestamp = await getTimestamp(accessToken);
+    var lastSongIndex = songIndex;
+    var docRef = await database.collection('rooms').doc(roomCode);
+
+    console.log("starting heartbeat");
+
+    while (true) {
+        await sleep(1000);
+        var currentTimestamp = await getTimestamp(accessToken);
+        var data = await docRef.get().then(function (doc) {
+            if (doc.exists) {
+                return doc.data()
+            }
+        }).catch(function (error) {
+            console.log('Error occurred getting secret. Trying again...')
+            return getClientSecret()
+        })
+        var currentSongIndex = data.songIndex;
+
+        if (currentTimestamp < lastTimestamp) {
+            if (currentSongIndex == lastSongIndex) {
+                var currentTime = new Date();
+
+                docRef.update({
+                    songIndex: currentSongIndex + 1,
+                    songStart: currentTime
+                })
+            }
+        }
     }
 }
