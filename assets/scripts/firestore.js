@@ -106,7 +106,7 @@ async function joinRoom(roomCode, database) {
         heartbeat(accessToken, data.songIndex, roomCode, database);
     }
 
-    //createVote(database, roomCode);
+    createVote(database, roomCode);
     listener(database, roomCode);
 }
 
