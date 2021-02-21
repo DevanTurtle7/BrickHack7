@@ -15,4 +15,4 @@ We are proud of the voting system because it took a lot of creativity and effort
 ## What we learned
 We learned a lot about AJAX and using APIs.
 
-[Try it Out](https://devanturtle7.github.io)
+[Try it Out](https://devanturtle7.github.io/BrickHack7)
