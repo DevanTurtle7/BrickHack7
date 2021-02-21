@@ -8,6 +8,8 @@ $(document).ready(function () {
     var roomCode;
 
     $("#joinGroup").click(async function () {
+        $("#label1").hide();
+        $("#groupID").hide();
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
@@ -18,6 +20,8 @@ $(document).ready(function () {
     });
 
     $("#makeGroup").click(async function () {
+        $("#label1").hide();
+        $("#groupID").hide();
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
@@ -37,9 +41,15 @@ $(document).ready(function () {
             var currentTime = new Date();
 
             docRef.update({
-                songIndex: currentSongIndex + 1,
+                songIndex: firebase.firestore.FieldValue.increment(1),
                 timestamp: currentTime
             })
+
+            var clientSecret = await getClientSecret(database);
+            var refreshToken = getRefreshToken();
+            var accessToken = await getAccessToken(clientSecret, refreshToken);
+
+            nextSong(accessToken);
         }
     })
 });

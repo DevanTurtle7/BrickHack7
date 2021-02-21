@@ -1,6 +1,5 @@
 #body{
-    background-color: aquamarine !important;
-
+    background-image: linear-gradient(to right, red , yellow) !important;
 }
 #baseForm {
     text-align: center;
