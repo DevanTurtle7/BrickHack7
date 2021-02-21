@@ -106,7 +106,7 @@ async function joinRoom(roomCode, database) {
         heartbeat(accessToken, data.songIndex, roomCode, database);
     }
 
-    createVote(database, roomCode);
+    //createVote(database, roomCode);
     listener(database, roomCode);
 }
 
@@ -145,7 +145,7 @@ async function listener(database, roomCode) {
         var creatingVote = JSON.parse(localStorage.getItem('creatingVote'));
         var handlingVote = JSON.parse(localStorage.getItem('handlingVote'));
 
-        if (doc.data().vote.length == 0) {
+        if (doc.data().vote.time == null) {
             localStorage.setItem("handlingVote", false);
         } else if (!handlingVote && !creatingVote) {
             console.log("you have a vote pending");
@@ -156,7 +156,7 @@ async function listener(database, roomCode) {
             $("#voteYes").click(function () {
                 if (!voted) {
                     docRef.update({
-                        "vote.0.yes": firebase.firestore.FieldValue.increment(1)
+                        "vote.yes": firebase.firestore.FieldValue.increment(1)
                     });
                 }
                 voted = true;
@@ -165,7 +165,7 @@ async function listener(database, roomCode) {
             $("#voteNo").click(function () {
                 if (!voted) {
                     docRef.update({
-                        "vote.0.no": firebase.firestore.FieldValue.increment(1)
+                        "vote.no": firebase.firestore.FieldValue.increment(1)
                     });
                 }
                 voted = true;
@@ -180,15 +180,15 @@ async function createVote(database, roomCode) {
     var data = await getRoomData(database, roomCode);
     var docRef = await database.collection('rooms').doc(roomCode);
 
-    if (data.vote.length == 0) {
+    if (data.vote.time == null) {
         localStorage.setItem("creatingVote", true);
 
         await docRef.update({
-            vote: [{
+            vote: {
                 time: timestamp,
                 yes: 1,
                 no: 0,
-            }]
+            }
         })
 
         const result = new Promise(async function (resolve, reject) {
@@ -203,13 +203,13 @@ async function createVote(database, roomCode) {
                 var data = await getRoomData(database, roomCode);
                 var currentTime = new Date().getTime();
                 var diff = Math.round((currentTime - timestamp.getTime()) / 1000);
-                votes = data.vote[0].yes + data.vote[0].no;
+                votes = data.vote.yes + data.vote.no;
                 members = data.Audience.length;
             }
 
             var data = await getRoomData(database, roomCode);
-            var totalVotes = data.vote[0].yes + data.vote[0].no;
-            var voteResult = data.vote[0].yes / totalVotes >= 0.5;
+            var totalVotes = data.vote.yes + data.vote.no;
+            var voteResult = data.vote.yes / totalVotes >= 0.5;
 
             console.log(voteResult);
             localStorage.setItem('creatingVote', false);
