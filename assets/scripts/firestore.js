@@ -62,6 +62,7 @@ async function makeRoom() {
         Audience: [],
         Queue: [],
         currently_playing: '',
+        songIndex = 0,
         timestamp: 0
     }
 
@@ -104,4 +105,8 @@ async function joinRoom(roomCode, database) {
     localStorage.setItem("creatingVote", false);
 
     playSong(accessToken, data.currently_playing, diff);
+    var i = 0;
+    for(i = 0; data.songIndex + 1 < data.Queue.length;i++){
+        addToQueue(accessToken,data.Queue[i])
+    }
 }
