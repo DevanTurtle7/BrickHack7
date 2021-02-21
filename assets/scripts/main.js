@@ -32,6 +32,6 @@ $(document).ready(function () {
 
     $("#skip").click(function() {
         console.log(roomCode);
-        createVote(database, roomCode)
+        var result = await createVote(database, roomCode)
     })
 });
