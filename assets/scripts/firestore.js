@@ -80,8 +80,25 @@ async function joinRoom(roomCode, database) {
     var accessToken = await getAccessToken(clientSecret, refreshToken);
     userId = await getUID(accessToken);
 
-    const res = await db.collection('rooms').doc(roomCode).update({
+    await db.collection('rooms').doc(roomCode).update({
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
     });
 
+<<<<<<< HEAD
+    var docRef = await database.collection('rooms').doc(roomCode);
+    var data = await docRef.get().then(function (doc) {
+        if (doc.exists) {
+            return doc.data()
+        }
+    }).catch(function (error) {
+        console.log('Error occurred getting secret. Trying again...')
+        return getClientSecret()
+    })
+
+    console.log(data.currently_playing);
+    console.log(data.timestamp);
+
+    playSong(accessToken, data.currently_playing, data.timestamp);
+=======
+>>>>>>> e0ed611f2f1b6c1f3677c9cf6968ea823c666432
 }
