@@ -134,6 +134,28 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
     }
 }
 
+function listener(roomCode){
+    var data = await docRef.get().then(function (doc) {
+        if (doc.exists) {
+            return doc.data()
+        }
+    }).catch(function (error) {
+        console.log('Error Calling the database ' + error)
+    })
+    var currentTime = new Date();
+    var docRef = await  database.collection('rooms').doc(roomCode);
+    database.collection("rooms").doc(roomCode)
+    .onSnapshot((doc) => {
+        console.log("Current data: ", doc.data());
+        if (data.vote.length == 0) {
+            localStorage.setItem("handlingVote", false);
+        }
+        else if(localStorage.getItem("handlingVote") == false && localStorage.getItem("creatingVote") == true){
+            localStorage.setItem("handlingVote", true);
+        }
+    });
+}
+
 async function createVote(database, roomCode) {
     var timestamp = new Date();
     var data = await getRoomData(database, roomCode);
