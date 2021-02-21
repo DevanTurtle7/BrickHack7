@@ -161,15 +161,16 @@ async function createVote(database, roomCode) {
         }).catch(function (error) {
             console.log('Error Calling the database ' + error)
         })
-    localStorage.setItem("creatingVote", true);
     var currentTime = new Date();
     var docRef = await  database.collection('rooms').doc(roomCode);
-    if (data.vote.length == 0) {}
-    await docRef.update({
-        vote: {
-            time: currentTime,
-            yes: 0,
-            no: 0,
-        }
-    })
+    if (data.vote.length == 0) {
+        localStorage.setItem("creatingVote", true);
+        await docRef.update({
+            vote: {
+                time: currentTime,
+                yes: 0,
+                no: 0,
+            }
+        })
+    }
 }
