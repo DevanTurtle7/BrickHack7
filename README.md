@@ -1,4 +1,5 @@
 # BrickHack7
+Visit the devpost page (here)[https://devpost.com/software/tempo-rl5q2m?ref_content=user-portfolio&ref_feature=in_progress]
 ## What it does
 Lets friends listen to Spotify together! Songs can be added to the queue and listeners can vote to skip a song.
 
@@ -14,4 +15,4 @@ We are proud of the voting system because it took a lot of creativity and effort
 ## What we learned
 We learned a lot about AJAX and using APIs.
 
-[Try it Out] (https://devanturtle7.github.io)
+[Try it Out](https://devanturtle7.github.io)
