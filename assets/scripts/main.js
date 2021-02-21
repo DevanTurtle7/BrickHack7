@@ -5,8 +5,11 @@ function sleep(ms) {
 $(document).ready(function () {
     var database = setupFirebase();
     login(database);
+    var roomCode;
     
     $("#joinGroup").click(function() {
+        roomCode = joinRoom($("#groupID").val(), database);
+
         joinRoom($("#groupID").val(), database);
         $("#makeGroup").hide();
         $("#joinGroup").hide();
@@ -24,5 +27,11 @@ $(document).ready(function () {
         $("#voteNo").show();
         $("#addSong").show();
         $("#skip").show();
+        roomCode = makeRoom();
+
     });
+
+    $("#skip").click(function() {
+        createVote(database, roomCode)
+    })
 });

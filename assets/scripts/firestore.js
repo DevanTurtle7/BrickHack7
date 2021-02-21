@@ -66,8 +66,9 @@ async function makeRoom() {
     if (roomExists == null) {
         const res = await db.collection('rooms').doc(roomCode).set(data);
         joinRoom(roomCode, db);
+        return roomCode;
     } else {
-        makeRoom();
+        return makeRoom();
     }
 
 }
@@ -106,7 +107,7 @@ async function joinRoom(roomCode, database) {
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
     });
 
-    $("#suggest").click(async function () {
+    $("#addSong").click(async function () {
         addSongDB(database, roomCode, accessToken);
     });
 
@@ -117,6 +118,8 @@ async function joinRoom(roomCode, database) {
     }
 
     listener(database, roomCode, clientSecret);
+
+    return roomCode;
 }
 
 async function heartbeat(accessToken, songIndex, roomCode, database) {
