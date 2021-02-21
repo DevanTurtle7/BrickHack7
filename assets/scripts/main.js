@@ -3,7 +3,7 @@ $(document).ready(function () {
     login(database);
     
     $("#joinGroup").click(function() {
-        joinRoom($("#groupID").val());
+        joinRoom($("#groupID").val(), database);
     });
 
     $("#makeGroup").click(function() {
