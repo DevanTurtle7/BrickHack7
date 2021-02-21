@@ -8,6 +8,8 @@ $(document).ready(function () {
     var roomCode;
 
     $("#joinGroup").click(async function () {
+        $("#label1").hide();
+        $("#groupID").hide();
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
@@ -18,6 +20,8 @@ $(document).ready(function () {
     });
 
     $("#makeGroup").click(async function () {
+        $("#label1").hide();
+        $("#groupID").hide();
         $("#makeGroup").hide();
         $("#joinGroup").hide();
         $("#voteYes").show();
