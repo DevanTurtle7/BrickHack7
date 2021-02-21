@@ -226,6 +226,11 @@ async function listener(database, roomCode, clientSecret) {
             addToQueue(accessToken, uri)
         }
 
+        if (currentNumSongs > numSongs && currentNumSongs == 1) {
+            var uri = doc.data().Queue[0];
+            playSong(accessToken, uri, 0);
+        }
+
         numSongs = currentNumSongs;
     });
 }
