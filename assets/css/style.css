@@ -103,3 +103,7 @@ body {
 #startPage{
     padding-top: 20px;
 }
+
+#votingPromptLabel{
+    font-family: 'Archivo Black', sans-serif; 
+}
