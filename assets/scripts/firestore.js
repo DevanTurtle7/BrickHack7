@@ -86,6 +86,7 @@ async function startMusic(accessToken, database, roomCode) {
     for (var i = data.songIndex + 1; i < data.Queue.length; i++) {
         console.log("i is " + i);
         console.log(data.Queue[i]);
+        console.log("ERRRRRRRR");
         addToQueue(accessToken, data.Queue[i])
     }
 
@@ -106,19 +107,7 @@ async function joinRoom(roomCode, database) {
     });
 
     $("#suggest").click(async function () {
-        var data = await getRoomData(database, roomCode);
-        var uri = $("#songQueue").val();
-        var currentTime = new Date();
-        var noSongs = data.Queue.length == 0;
-
-        await database.collection('rooms').doc(roomCode).update({
-            Queue: firebase.firestore.FieldValue.arrayUnion(uri),
-            timestamp: currentTime
-        });
-
-        if (noSongs) {
-            startMusic(accessToken, database, roomCode);
-        }
+        addSongDB(database, roomCode, accessToken);
     });
 
     var data = await getRoomData(database, roomCode);
@@ -127,7 +116,7 @@ async function joinRoom(roomCode, database) {
         startMusic(accessToken, database, roomCode);
     }
 
-    listener(database, roomCode);
+    listener(database, roomCode, clientSecret);
 }
 
 async function heartbeat(accessToken, songIndex, roomCode, database) {
@@ -149,21 +138,30 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
 
                 docRef.update({
                     songIndex: currentSongIndex + 1,
-                    songStart: currentTime
+                    timestamp: currentTime
                 })
             }
         }
     }
 }
 
-async function listener(database, roomCode) {
+async function listener(database, roomCode, clientSecret) {
     var docRef = await database.collection('rooms').doc(roomCode);
+    var roomData = await getRoomData(database, roomCode);
+    var numSongs = roomData.Queue.length;
 
-    database.collection("rooms").doc(roomCode).onSnapshot((doc) => {
+    database.collection("rooms").doc(roomCode).onSnapshot(async function(doc) {
+        var refreshToken = getRefreshToken();
+        var accessToken = await getAccessToken(clientSecret, refreshToken);
+
         console.log("Current data: ", doc.data());
 
         var creatingVote = JSON.parse(localStorage.getItem('creatingVote'));
         var handlingVote = JSON.parse(localStorage.getItem('handlingVote'));
+        var currentNumSongs = doc.data().Queue.length;
+
+        console.log(currentNumSongs)
+        console.log(numSongs);
 
         if (doc.data().vote.time == null) {
             localStorage.setItem("handlingVote", false);
@@ -192,6 +190,14 @@ async function listener(database, roomCode) {
             });
 
         }
+
+        if (currentNumSongs > numSongs && currentNumSongs - 1 != doc.data().songIndex) {
+            console.log('adding to queue');
+            var uri = doc.data().Queue[currentNumSongs-1];
+            addToQueue(accessToken, uri)
+        }
+
+        numSongs = currentNumSongs;
     });
 }
 
@@ -243,4 +249,22 @@ async function createVote(database, roomCode) {
     }
 
     return null
+}
+
+async function addSongDB(database, roomCode, accessToken) {
+    var data = await getRoomData(database, roomCode);
+    var uri = $("#songQueue").val();
+    var noSongs = data.Queue.length == 0;
+
+    await database.collection('rooms').doc(roomCode).update({
+        Queue: firebase.firestore.FieldValue.arrayUnion(uri),
+    });
+
+    if (noSongs) {
+        var currentTime = new Date();
+        await database.collection('rooms').doc(roomCode).update({
+            timestamp: currentTime
+        });
+        startMusic(accessToken, database, roomCode);
+    }
 }
