@@ -1,8 +1,9 @@
-#body{
-    
+body {
+    background-color: rgb(44, 43, 43);
 }
+
 #baseForm {
-    color:white;
+    color: white;
     text-align: center;
     margin: 0;
     position: absolute;
@@ -12,7 +13,7 @@
     transform: translate(-50%, -50%);
 }
 
-#songQueue{
+#songQueue {
     display: none;
 }
 
@@ -24,15 +25,15 @@
     display: none;
 }
 
-#voteNo{
+#voteNo {
     display: none;
 }
 
-#skip{
+#skip {
     display: none;
 }
 
-#addSong{
+#addSong {
     display: none;
 }
 
@@ -50,7 +51,7 @@
 }
 
 .Button {
-    background-color: rgb(101,211,110);
+    background-color: rgb(101, 211, 110);
     border: none;
     color: black;
     padding: 10px 20px;
@@ -60,4 +61,19 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 16px;
-  }
+}
+
+#room {
+    display: flex;
+    flex-flow: column-reverse;
+}
+
+#addSongPrompt {
+    padding-right: 50px;
+}
+
+#votePrompt {
+    background-color: rgb(35, 35, 35);
+    padding: 20px;
+    border-radius: 8px;
+}
