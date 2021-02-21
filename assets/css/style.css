@@ -31,3 +31,10 @@
 #websiteIntro {
     font-family: 'Arvo';
 }
+
+#Name {
+    display: none;
+}
+#Artist {
+    display: none;
+}
