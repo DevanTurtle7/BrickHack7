@@ -94,19 +94,14 @@ async function joinRoom(roomCode, database) {
         return getClientSecret()
     })
 
-    console.log(data.currently_playing);
-    console.log(data.timestamp);
-
     var startTime = data.songStart;
-    console.log(startTime)
-
     var currentTime = new Date();
     var currentTimeInSeconds = currentTime.getTime() / 1000;
-    console.log(currentTime);
-
     var diff = Math.round(Math.abs(currentTimeInSeconds - startTime.seconds));
-    
     diff *= 1000;
-    console.log(diff);
+
+    localStorage.setItem("handlingVote", false);
+    localStorage.setItem("creatingVote", false);
+
     playSong(accessToken, data.currently_playing, diff);
 }
