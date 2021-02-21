@@ -63,7 +63,8 @@ async function makeRoom() {
         Queue: [],
         currently_playing: '',
         songIndex: 0,
-        timestamp: 0
+        timestamp: 0,
+        vote: []
     }
 
     if (roomExists == null) {
@@ -147,4 +148,9 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
             }
         }
     }
+}
+
+async function createVote(){
+    localStorage.setItem("creatingVote", true);
+
 }
