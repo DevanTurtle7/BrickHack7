@@ -41,9 +41,9 @@ $(document).ready(function () {
                 timestamp: currentTime
             })
 
-            var clientSecret = getClientSecret();
+            var clientSecret = await getClientSecret(database);
             var refreshToken = getRefreshToken();
-            var accessToken = getAccessToken(clientSecret, refreshToken);
+            var accessToken = await getAccessToken(clientSecret, refreshToken);
 
             nextSong(accessToken);
         }
