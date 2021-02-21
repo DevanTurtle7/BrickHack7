@@ -104,7 +104,7 @@ async function joinRoom(roomCode, database) {
     localStorage.setItem("handlingVote", false);
     localStorage.setItem("creatingVote", false);
 
-    playSong(accessToken, data.Queue[data.songIndex], diff);
+    await playSong(accessToken, data.Queue[data.songIndex], diff);
     var i = 0;
     for(i = data.songIndex + 1; i < data.Queue.length;i++){
         console.log(data.Queue[i]);
