@@ -125,6 +125,7 @@ async function addToQueue(accessToken, uri) {
             }, error: function (data) {
                 console.log("error");
                 console.log(data);
+                reject(data);
             }
         })
     })
@@ -159,10 +160,14 @@ async function nextSong(accessToken) {
     return result // Return the response
 }
 
-async function playSong(accessToken, uri) {
+async function playSong(accessToken, uri, timestamp) {
     try {
         await addToQueue(accessToken, uri);
         await nextSong(accessToken);
+
+        if (typeof timestamp != undefined) {
+            await setTimestamp(accessToken, timestamp);
+        }
     } catch {
     }
 }
@@ -216,7 +221,7 @@ async function getTimestamp(accessToken) {
 }
 
 function setTimestamp(accessToken, ms) {
-    const result = new Promise(function(resolve, reject) {
+    const result = new Promise(function (resolve, reject) {
         $.ajax({
             type: "PUT",
             url: "https://api.spotify.com/v1/me/player/seek?position_ms=" + ms,
@@ -224,10 +229,10 @@ function setTimestamp(accessToken, ms) {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + accessToken
-            }, success: function(data) {
+            }, success: function (data) {
                 console.log(data);
                 resolve(data);
-            }, error: function(data) {
+            }, error: function (data) {
                 console.log(data);
                 resolve(data);
             }
@@ -237,12 +242,12 @@ function setTimestamp(accessToken, ms) {
     return result;
 }
 
-function uriToID(URI){
+function uriToID(URI) {
     var results = URI.match("spotify:track:(.*)");
     return results
 }
 
-function idtoURI(ID){
+function idtoURI(ID) {
     return "spotify:track:" + ID;
 }
 
