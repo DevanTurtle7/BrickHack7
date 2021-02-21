@@ -18,5 +18,11 @@ $(document).ready(function () {
 
     $("#makeGroup").click(function() {
         makeRoom();
+        $("#makeGroup").hide();
+        $("#joinGroup").hide();
+        $("#voteYes").show();
+        $("#voteNo").show();
+        $("#addSong").show();
+        $("#skip").show();
     });
 });
