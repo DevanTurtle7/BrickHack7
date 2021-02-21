@@ -154,10 +154,17 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
 }
 
 async function createVote(database, roomCode) {
+        var data = await docRef.get().then(function (doc) {
+            if (doc.exists) {
+                return doc.data()
+            }
+        }).catch(function (error) {
+            console.log('Error Calling the database ' + error)
+        })
     localStorage.setItem("creatingVote", true);
     var currentTime = new Date();
     var docRef = await  database.collection('rooms').doc(roomCode);
-
+    if (data.vote.length == 0) {}
     await docRef.update({
         vote: {
             time: currentTime,
