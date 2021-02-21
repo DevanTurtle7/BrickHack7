@@ -97,9 +97,6 @@ async function joinRoom(roomCode, database) {
     console.log(data.currently_playing);
     console.log(data.timestamp);
 
-<<<<<<< HEAD
-    playSong(accessToken, data.currently_playing, data.timestamp);
-=======
     var startTime = data.songStart;
     console.log(startTime)
 
@@ -109,7 +106,4 @@ async function joinRoom(roomCode, database) {
     var diff = Math.abs(currentTimeInSeconds - startTime);
     console.log(diff);
     playSong(accessToken, data.currently_playing, diff);
-
-
->>>>>>> b11697f456a67a7e077c7ad7c37ccd42938721f6
 }
