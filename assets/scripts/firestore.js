@@ -93,8 +93,8 @@ async function joinRoom(roomCode, database) {
             return doc.data()
         }
     }).catch(function (error) {
-        console.log('Error occurred getting secret. Trying again...')
-        return getClientSecret()
+            console.log("Error calling the database");
+            console.log(error);
     })
 
     if (data.Queue.length > 0) {
@@ -135,8 +135,8 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
                 return doc.data()
             }
         }).catch(function (error) {
-            console.log('Error occurred getting secret. Trying again...')
-            return getClientSecret()
+            console.log("Error calling the database");
+            console.log(error);
         })
         var currentSongIndex = data.songIndex;
 
