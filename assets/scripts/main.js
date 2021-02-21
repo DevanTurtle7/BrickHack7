@@ -9,6 +9,14 @@ $(document).ready(function () {
     
     $("#joinGroup").click(function() {
         roomCode = joinRoom($("#groupID").val(), database);
+
+        joinRoom($("#groupID").val(), database);
+        $("#makeGroup").hide();
+        $("#joinGroup").hide();
+        $("#voteYes").show();
+        $("#voteNo").show();
+        $("#addSong").show();
+        $("#skip").show();
     });
 
     $("#makeGroup").click(function() {
