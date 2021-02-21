@@ -62,7 +62,7 @@ async function makeRoom() {
         Audience: [],
         Queue: [],
         currently_playing: '',
-        songIndex = 0,
+        songIndex: 0,
         timestamp: 0
     }
 
@@ -104,9 +104,10 @@ async function joinRoom(roomCode, database) {
     localStorage.setItem("handlingVote", false);
     localStorage.setItem("creatingVote", false);
 
-    playSong(accessToken, data.currently_playing, diff);
+    playSong(accessToken, data.Queue[data.songIndex], diff);
     var i = 0;
-    for(i = 0; data.songIndex + 1 < data.Queue.length;i++){
-        addToQueue(accessToken,data.Queue[i])
+    for(i = data.songIndex + 1; i < data.Queue.length;i++){
+        console.log(data.Queue[i]);
+        addToQueue(accessToken, data.Queue[i])
     }
 }
