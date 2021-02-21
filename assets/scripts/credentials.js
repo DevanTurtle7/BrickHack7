@@ -3,7 +3,7 @@
 // Spotify
 var client_id = "d661dc99991846f18487325c0815727d";
 var redirect_uri = "https://devanturtle7.github.io/BrickHack7/";
-//redirect_uri="http://127.0.0.1:5500"
+redirect_uri="http://127.0.0.1:5500"
 
 // Firebase
 var firebaseConfig = {
