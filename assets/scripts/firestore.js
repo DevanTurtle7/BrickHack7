@@ -84,7 +84,6 @@ async function joinRoom(roomCode, database) {
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
     });
 
-<<<<<<< HEAD
     var docRef = await database.collection('rooms').doc(roomCode);
     var data = await docRef.get().then(function (doc) {
         if (doc.exists) {
@@ -99,6 +98,4 @@ async function joinRoom(roomCode, database) {
     console.log(data.timestamp);
 
     playSong(accessToken, data.currently_playing, data.timestamp);
-=======
->>>>>>> e0ed611f2f1b6c1f3677c9cf6968ea823c666432
 }

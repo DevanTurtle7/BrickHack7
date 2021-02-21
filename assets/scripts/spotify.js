@@ -168,8 +168,7 @@ async function playSong(accessToken, uri, timestamp) {
         if (typeof timestamp != undefined) {
             await setTimestamp(accessToken, timestamp);
         }
-    } catch {
-    }
+    } catch {}
 }
 
 async function getUID(accessToken) {
@@ -270,6 +269,31 @@ async function getSong(accessToken, id) {
             }, error: function (data) {
                 console.log(data)
                 reject(data)
+            }
+        })
+    })
+
+    return result;
+}
+
+function resumeSong(accessToken) {
+    console.log(1);
+    const result = new Promise(function (resolve, reject) {
+        $.ajax({
+            type: "PUT",
+            url: "https://api.spotify.com/v1/me/player/play",
+            data: JSON.stringify({
+            }), headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken,
+            }, success: function (data) {
+                console.log(data);
+                console.log(data);
+                resolve(data);
+            }, error: function (data) {
+                console.log(data);
+                reject(error);
             }
         })
     })
