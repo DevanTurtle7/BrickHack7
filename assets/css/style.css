@@ -20,6 +20,14 @@
     display: none;
 }
 
-#suggest{
+#skip{
     display: none;
+}
+
+#addSong{
+    display: none;
+}
+
+#websiteIntro {
+    font-family: 'Roboto Slab';font-size: 22px;
 }
