@@ -1,5 +1,5 @@
 # BrickHack7
-Visit the devpost page (here)[https://devpost.com/software/tempo-rl5q2m?ref_content=user-portfolio&ref_feature=in_progress]
+Visit the devpost page [here](https://devpost.com/software/tempo-rl5q2m?ref_content=user-portfolio&ref_feature=in_progress)
 ## What it does
 Lets friends listen to Spotify together! Songs can be added to the queue and listeners can vote to skip a song.
 
