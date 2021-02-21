@@ -114,7 +114,10 @@ async function joinRoom(roomCode, database) {
             console.log(data.Queue[i]);
             addToQueue(accessToken, data.Queue[i])
         }
+
     }
+    
+    createVote(database, roomCode);
 }
 
 async function heartbeat(accessToken, songIndex, roomCode, database) {
@@ -150,7 +153,16 @@ async function heartbeat(accessToken, songIndex, roomCode, database) {
     }
 }
 
-async function createVote(){
+async function createVote(database, roomCode) {
     localStorage.setItem("creatingVote", true);
+    var currentTime = new Date();
+    var docRef = await  database.collection('rooms').doc(roomCode);
 
+    await docRef.update({
+        vote: {
+            time: currentTime,
+            yes: 0,
+            no: 0,
+        }
+    })
 }
