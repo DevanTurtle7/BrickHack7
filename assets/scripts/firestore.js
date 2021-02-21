@@ -83,5 +83,4 @@ async function joinRoom(roomCode, database) {
     const res = await db.collection('rooms').doc(roomCode).update({
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
     });
-
 }
