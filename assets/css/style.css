@@ -74,10 +74,15 @@ body {
 #room {
     display: flex;
     flex-flow: column-reverse;
+    justify-content: center;
 }
 
 #addSongPrompt {
-    padding-right: 50px;
+    padding-top: 50px;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
 }
 
 #votePrompt {
