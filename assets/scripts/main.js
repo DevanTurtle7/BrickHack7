@@ -17,4 +17,5 @@ $(document).ready(function () {
     $("#suggest").click(function() {
         alert($("#songQueue").val());
     });
+    
 });
