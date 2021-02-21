@@ -21,6 +21,10 @@ body {
     height: 10px;
 }
 
+#roomInfo{
+    display: none;
+}
+
 #songQueue{
     display: none;
 }

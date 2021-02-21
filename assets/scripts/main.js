@@ -16,6 +16,8 @@ $(document).ready(function () {
         $("#label2").show();
         $("#songQueue").show();
         roomCode = await joinRoom($("#groupID").val(), database);
+        $("#roomInfo").text("Room Code: " + roomCode);
+        $("#roomInfo").show();
     });
 
     $("#makeGroup").click(async function () {
@@ -27,6 +29,8 @@ $(document).ready(function () {
         $("#label2").show();
         $("#songQueue").show();
         roomCode = await makeRoom();
+        $("#roomInfo").text("Room Code: " + roomCode);
+        $("#roomInfo").show();
         
     });
 
