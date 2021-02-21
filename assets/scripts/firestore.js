@@ -58,9 +58,8 @@ async function makeRoom() {
     const data = {
         Audience: [],
         Queue: [],
-        currently_playing: '',
         songIndex: 0,
-        timestamp: 0,
+        timestamp: null,
         vote: []
     }
 
@@ -73,6 +72,26 @@ async function makeRoom() {
 
 }
 
+async function startMusic(accessToken, database, roomCode) {
+    var data = await getRoomData(database, roomCode)
+    var startTime = data.timestamp;
+    console.log(startTime);
+    var currentTime = new Date();
+    var currentTimeInSeconds = currentTime.getTime() / 1000;
+    var diff = Math.round(Math.abs(currentTimeInSeconds - startTime.seconds));
+    diff *= 1000;
+
+    await playSong(accessToken, data.Queue[data.songIndex], diff);
+
+    for (var i = data.songIndex + 1; i < data.Queue.length; i++) {
+        console.log("i is " + i);
+        console.log(data.Queue[i]);
+        addToQueue(accessToken, data.Queue[i])
+    }
+
+    heartbeat(accessToken, data.songIndex, roomCode, database);
+}
+
 async function joinRoom(roomCode, database) {
     alert("You've Successfully joined the Room!");
     var clientSecret = await getClientSecret(database);
@@ -82,28 +101,26 @@ async function joinRoom(roomCode, database) {
     localStorage.setItem("handlingVote", false);
     localStorage.setItem("creatingVote", false);
 
-    await db.collection('rooms').doc(roomCode).update({
+    await database.collection('rooms').doc(roomCode).update({
         Audience: firebase.firestore.FieldValue.arrayUnion(userId)
+    });
+
+    $("#suggest").click(async function () {
+        var uri = $("#songQueue").val();
+        var currentTime = new Date();
+
+        await database.collection('rooms').doc(roomCode).update({
+            Queue: firebase.firestore.FieldValue.arrayUnion(uri),
+            timestamp: currentTime
+        });
+
+        startMusic(accessToken, database, roomCode);
     });
 
     var data = await getRoomData(database, roomCode);
 
     if (data.Queue.length > 0) {
-        var startTime = data.songStart;
-        var currentTime = new Date();
-        var currentTimeInSeconds = currentTime.getTime() / 1000;
-        var diff = Math.round(Math.abs(currentTimeInSeconds - startTime.seconds));
-        diff *= 1000;
-
-        await playSong(accessToken, data.Queue[data.songIndex], diff);
-
-        for (var i = data.songIndex + 1; i < data.Queue.length; i++) {
-            console.log("i is " + i);
-            console.log(data.Queue[i]);
-            addToQueue(accessToken, data.Queue[i])
-        }
-
-        heartbeat(accessToken, data.songIndex, roomCode, database);
+        startMusic(accessToken, database, roomCode);
     }
 
     createVote(database, roomCode);
