@@ -107,6 +107,7 @@ async function joinRoom(roomCode, database) {
     }
 
     createVote(database, roomCode);
+    listener(database, roomCode);
 }
 
 async function heartbeat(accessToken, songIndex, roomCode, database) {
