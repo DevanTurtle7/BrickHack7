@@ -106,15 +106,19 @@ async function joinRoom(roomCode, database) {
     });
 
     $("#suggest").click(async function () {
+        var data = await getRoomData(database, roomCode);
         var uri = $("#songQueue").val();
         var currentTime = new Date();
+        var noSongs = data.Queue.length == 0;
 
         await database.collection('rooms').doc(roomCode).update({
             Queue: firebase.firestore.FieldValue.arrayUnion(uri),
             timestamp: currentTime
         });
 
-        startMusic(accessToken, database, roomCode);
+        if (noSongs) {
+            startMusic(accessToken, database, roomCode);
+        }
     });
 
     var data = await getRoomData(database, roomCode);
@@ -123,7 +127,6 @@ async function joinRoom(roomCode, database) {
         startMusic(accessToken, database, roomCode);
     }
 
-    createVote(database, roomCode);
     listener(database, roomCode);
 }
 
