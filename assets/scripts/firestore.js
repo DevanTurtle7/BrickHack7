@@ -172,10 +172,13 @@ async function listener(database, roomCode, clientSecret) {
             console.log("you have a vote pending");
             localStorage.setItem("handlingVote", true);
 
+            $("#votePrompt").show();
+
             var voted = false;
 
             $("#voteYes").click(function () {
                 if (!voted) {
+                    $("#votePrompt").hide();
                     docRef.update({
                         "vote.yes": firebase.firestore.FieldValue.increment(1)
                     });
@@ -185,12 +188,16 @@ async function listener(database, roomCode, clientSecret) {
 
             $("#voteNo").click(function () {
                 if (!voted) {
+                    $("#votePrompt").hide();
                     docRef.update({
                         "vote.no": firebase.firestore.FieldValue.increment(1)
                     });
                 }
                 voted = true;
+                
             });
+
+            
 
             var vote = {};
             var data = await getRoomData(database, roomCode);
@@ -210,6 +217,8 @@ async function listener(database, roomCode, clientSecret) {
             if (vote.yes / totalVotes >= .5) {
                 nextSong(accessToken);
             }
+
+            $("#votePrompt").hide();
         }
 
         if (currentNumSongs > numSongs && currentNumSongs - 1 != doc.data().songIndex) {
