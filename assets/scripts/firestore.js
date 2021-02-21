@@ -95,7 +95,6 @@ async function startMusic(accessToken, database, roomCode) {
 }
 
 async function joinRoom(roomCode, database) {
-    alert("You've Successfully joined the Room!");
     var clientSecret = await getClientSecret(database);
     var refreshToken = getRefreshToken();
     var accessToken = await getAccessToken(clientSecret, refreshToken);
