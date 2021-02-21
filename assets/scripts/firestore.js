@@ -78,7 +78,6 @@ async function joinRoom(roomCode) {
     userId = getUID();
 
     
-
     database.collection("rooms").doc("XNUG")
     .onSnapshot((doc) => {
         console.log("Current data: ", doc.data());
